@@ -14,6 +14,28 @@
     </header>
 
     <main>
+        
+        <!-- Section de tirage -->
+        <section class="section-tirage">
+            <div>
+                <button id="tirage-btn" type="button" aria-label="Tirer les 12 horoscopes du jour">🔮 Tirer les 12 messages</button>
+            </div>
+        </section>
+
+        <!-- Loader (masqué par défaut) -->
+        <div id="loader" aria-hidden="true" hidden>
+            <p>Chargement des données...</p>
+        </div>
+
+        <!-- Message d’erreur (masqué par défaut) -->
+        <div id="erreur-message" role="alert" aria-live="assertive" hidden>
+            <p>Une erreur est survenue. Veuillez réessayer.</p>
+        </div>
+
+        <!-- Zone d’affichage des résultats injectés dynamiquement par JavaScript -->
+        <!-- Résultats des horoscopes -->
+        <section id="resultat-api" aria-live="polite" role="region" aria-label="Horoscope oracle du jour"></section>
+
     </main>
 
     <footer>

@@ -24,3 +24,8 @@ const btnTirage = document.getElementById('btn-tirage');
 const loader = document.getElementById('loader');
 const erreurMessage = document.getElementById('erreur-message');
 const resultatApi = document.getElementById('resultat-api');
+
+// On capture le clic sur le bouton de tirage
+btnTirage.addEventListener('click', function() {
+    lancerTirage();
+});

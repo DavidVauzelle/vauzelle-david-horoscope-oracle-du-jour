@@ -4,6 +4,8 @@
  * Auteur : David VAUZELLE
  * Date : 07/2025
  */
+// === Configuration API ===
+
 // Clé API et URL de l'API
 const apiKey = "SI_DART_Sun_api_keys_!598254741369!excalibure!paramKeysOracle!887782secretNum&5882!";
 const baseUrl = "https://oracles-api.sidathsoeun.fr/oracle_api.php";
@@ -15,50 +17,100 @@ const fetchOptions = {
     body: JSON.stringify({ api_key: apiKey })
 };
 
+// === Sélecteurs DOM ===
+
 // Déclaration des sélecteurs DOM
 const sectionTirage = document.querySelector('.section-tirage');
 const btnTirage = document.getElementById('btn-tirage');
-// Seront créés dynamiquement (loader, erreur, résultats)
+
+// Éléments de feedback visuel (chargement, erreur, résultats)
 const chargement = document.getElementById('chargement');
+const erreurDiv = document.getElementById('erreur-message');
 const erreurMessage = "Une erreur est survenue. Veuillez réessayer.";
 const resultatApi = document.getElementById('resultat-api');
+
+// === Gestion des événements ===
 
 // On capture le clic sur le bouton de tirage
 btnTirage.addEventListener('click', function() {
     lancerTirage();
 });
 
+// === Fonction principale : lancerTirage() ===
+
 // Fonction pour récupérer et afficher l'horoscope des 12 signes
 async function lancerTirage() {
+    // Réinitialisation de l'interface
+    erreurDiv.hidden = true;
     // Vider les résultats précédents
     resultatApi.innerHTML = "";
 
     // Affiche une barre de chargement à chaque tirage
     chargement.hidden = false;
+    chargement.removeAttribute('aria-hidden');
     chargement.innerHTML = "<p>Chargement en cours…</p>"; // barre de chargement à styliser
+    btnTirage.disabled = true; // Désactive le bouton pendant le chargement
     // chargement.innerHTML = "<div class='bar-chargement'></div>"; // Pour afficher la barre de chargement une fois stylisée
 
     try {
-        // Requête POST vers l'API avec clé et signe
+        // Requête POST vers l'API avec clé
        const response = await fetch(baseUrl, fetchOptions);
 
-        // Affiche un message d'erreur si la réponse est incorrecte
+        // Erreur si réponse incorrecte
         if (!response.ok) throw new Error(erreurMessage);
 
         // Conversion de la réponse en JSON
         const data = await response.json();
 
-        // Affichage temporaire des données récupérées (formaté JSON)
-        resultatApi.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        // Extraction de l'objet 'horoscope' contenant les citations par signe depuis la réponse API
+        const horoscopes = data.horoscope;
+
+        // === Zone d'affichage des résultats de l'API ===
+
+        // Vide la Zone d’affichage des résultats
+        resultatApi.innerHTML = "";
+
+        // Parcours des signes avec for...in
+        for (const signe in horoscopes) {
+            // Créer une carte pour chaque signe
+            const carte = document.createElement("article");
+            carte.setAttribute('tabindex', '0');
+            carte.setAttribute('aria-label', `Horoscope du signe ${signe}`);
+            carte.classList.add("carte-horoscope"); // Ajout d'une classe CSS pour styliser la carte
+
+            // Création du titre (nom du signe)
+            const titre = document.createElement("h2");
+            titre.textContent = signe; // Permet de récupérer et d'afficher le nom du signe
+
+            // Citation du jour
+            const citation = document.createElement("blockquote");
+            citation.classList.add('horoscope')
+            citation.textContent = horoscopes[signe];
+
+            // Ajout des éléments dans la carte
+            carte.appendChild(titre);
+            carte.appendChild(citation);
+
+            // Ajout de la carte dans la zone résultat
+            resultatApi.appendChild(carte);
+        }
+
+    // === Gestion des erreurs et chargement ===
 
     } catch (error) {
-        // Affiche un message d'erreur si la requête échoue
-        resultatApi.innerHTML = `<p style="color:red;">Erreur : ${error.message}</p>`;
+        // En cas d'erreur (réseau, API, etc.), on affiche un message accessible à l'utilisateur
+        erreurDiv.querySelector('p').textContent = erreurMessage;
+        erreurDiv.hidden = false;
+
+        // On vide la zone de résultats pour ne pas afficher d'anciens résultats
+        resultatApi.innerHTML = "";
     }
 
     finally {
-        // Cache le barre de chargement après la requête
+        // Fin du traitement : on masque la barre de chargement visuellement et pour les technologies d'assistance
+        btnTirage.disabled = false; // Réactive le bouton de tirage
         chargement.innerHTML = "";
+        chargement.setAttribute('aria-hidden', 'true');
         chargement.hidden = true;
     }
 }

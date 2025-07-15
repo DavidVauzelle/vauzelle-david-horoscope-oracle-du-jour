@@ -16,3 +16,11 @@ const fetchOptions = {
     },
     body: JSON.stringify({ api_key: apiKey })
 };
+
+// Déclaration des sélecteurs DOM
+const sectionTirage = document.querySelector('.section-tirage');
+const btnTirage = document.getElementById('btn-tirage');
+// Seront créés dynamiquement (loader, erreur, résultats)
+const loader = document.getElementById('loader');
+const erreurMessage = document.getElementById('erreur-message');
+const resultatApi = document.getElementById('resultat-api');

@@ -1,14 +1,15 @@
-/* Règles globales de base */
+/* Règles globales de base : reset des marges, paddings et gestion du box-sizing */
 *,
 *::before,
 *::after {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Important pour que padding/border ne modifient pas la largeur totale */
 }
 
 /* --------------------------
-   Palette de couleurs
+   Palette de couleurs et polices
+   Variables CSS pour faciliter la maintenance et la cohérence
 ---------------------------- */
 :root {
     /* Couleurs de fond */
@@ -20,8 +21,12 @@
     --couleur-texte-secondaire: #e0e0e0;
     --couleur-texte-alt: #233554;
 
-    /* Couleur accent / appel à l’action */
+    /* Couleur accent / appel à l’action (boutons) */
     --couleur-accent: #fca311;
+
+    /* Polices personnalisées */
+    --font-header-footer: 'Cinzel', serif;
+    --font-cartes: 'Roboto', sans-serif;
 }
 
 /* --------------------------
@@ -29,13 +34,13 @@
    — harmonisation avec la palette
 ---------------------------- */
 body {
-    background-color: var(--couleur-fond-secondaire); /* plus sombre pour contraster avec les blocs */
+    background-color: var(--couleur-fond-secondaire);
     color: var(--couleur-texte-principal);
 }
 
 header,
 footer {
-    background-color: var(--couleur-fond-principal); /* légèrement plus clair */
+    background-color: var(--couleur-fond-principal); /* fond un peu plus clair */
     color: var(--couleur-texte-principal);
 }
 
@@ -47,7 +52,78 @@ p {
     color: var(--couleur-texte-secondaire);
 }
 
-/* Fin des règles globales de couleurs */
+/* === Fin palette de couleurs et polices === */
+
+/* --------------------------
+    Typographie - Polices & couleurs
+    Gestion spécifique des polices, alignements, marges
+---------------------------- */
+header, footer {
+    font-family: var(--font-header-footer);
+    text-align: center;
+    padding: 1.5rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem; /* petit écart sous le titre */
+}
+
+h1, h2 {
+    color: var(--couleur-texte-principal);
+    font-family: var(--font-header-footer);
+    margin: 1rem 0; /* marges verticales standard pour espacer les titres */
+}
+
+p {
+    color: var(--couleur-texte-secondaire);
+    font-family: var(--font-cartes);
+    margin: 0.5rem 0; /* espacement vertical léger */
+}
+
+/* Cartes des horoscopes */
+.carte-horoscope {
+    font-family: var(--font-cartes);
+    background-color: var(--couleur-fond-principal);
+    color: var(--couleur-texte-secondaire);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;     /* Animations douces au survol pour ombre, déplacement et couleur */
+}
+
+.carte-horoscope:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* ombre portée plus visible */
+    transform: translateY(-5px); /* léger déplacement vers le haut */
+}
+
+/* Bloc citation dans la carte */
+.carte-horoscope blockquote.horoscope {
+    font-weight: 600;
+    font-style: italic;
+    padding: 0.75rem;
+    border-radius: 10px;
+    color: #fca311;
+    transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.carte-horoscope blockquote.horoscope:hover {
+    background-color: #16213e; /* léger fond au survol */
+}
+
+/* Styles spécifiques aux paragraphes dans header et footer */
+header p {
+    font-weight: 400;
+    font-size: 1.2rem;
+    opacity: 0.8; /* légèrement transparent pour atténuer */
+}
+
+footer p {
+    font-size: 1rem;
+    opacity: 0.6; /* encore plus atténué */
+}
+
+/* === Fin Typographie - Polices & couleurs === */
 
 /* --------------------------
    Layout global - Structure 
@@ -62,17 +138,15 @@ body,
 }
 
 body {
-    min-height: 100vh;
-    /* text-align: center; A déplacer car non pertinent ici (Pas layout pur) */
+    min-height: 100vh; /* s’étend sur toute la hauteur de la fenêtre */
 }
 
 .main-container {
-    flex: 1; /* Pour occuper l’espace entre header et footer */
+    flex: 1; /* Permet à ce conteneur de s'étendre et prendre tout l’espace vertical entre header et footer */
     align-items: center;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto; /* centrage horizontal */
     padding: 1rem;
-    gap: 2rem;
 }
 
 /* Styles spécifiques et isolés */
@@ -90,11 +164,11 @@ body {
     padding: 1rem;
 }
 
-/* Résultats (cartes des 12 signes) en mode colonne avec max-width */
+/* Résultats : grille 2 colonnes pour les cartes horoscope */
 #resultat-api {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr); /* Crée 2 colonnes de largeur égale, s’adaptant à la taille du conteneur */
+    gap: 2rem; /* espace entre les cartes */
     max-width: 1000px;
     margin: 0 auto;
     padding: 1rem;
@@ -102,17 +176,82 @@ body {
 
 /* === Fin layout === */
 
-/* Barre de chargement */
+/* --------------------------
+   Bouton principal - Tirage
+   --------------------------
+   Style du bouton qui déclenche le tirage des horoscopes.
+   Le style s'inspire du thème général : fond sombre, texte clair,
+   avec effet d’hover pour inciter à l’interaction.
+---------------------------- */
+.bouton-tirage {
+    margin: 1.5rem;
+    padding: 1rem;
+    background-color: var(--couleur-fond-principal);
+    color: var(--couleur-texte-secondaire);
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-family: var(--font-cartes);
+    letter-spacing: 0.5px; /* légère aération entre les lettres */
+    cursor: pointer; /* pointeur de souris en main */
+    transition: background-color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.bouton-tirage:hover,
+.bouton-tirage:focus {
+    background-color: #fca311;
+    color: #000;
+    transform: translateY(-5px);
+    outline: none; /* on supprime l'outline par défaut pour utiliser un focus personnalisé */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* ombre portée plus visible */
+}
+
+.bouton-tirage:focus-visible {
+    outline: 2px solid #fca311; /* accessibilité clavier : contour visible uniquement au focus clavier */
+    outline-offset: 2px; /* espace entre le bouton et le contour pour lisibilité */
+}
+
+.bouton-tirage:disabled {
+  background-color: #999; /* gris clair */
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  pointer-events: none; /* pour désactiver interactions */
+  opacity: 0.6;
+}
+
+/* === Fin du Bouton principal - Tirage === */
+
+/* --------------------------
+   Barre de chargement
+   --------------------------
+   Simule un chargement horizontal progressif.
+   Visible pendant l’appel API, anime la largeur de 0 à 100%.
+---------------------------- */
 #barre-chargement {
-    width: 0;
+    width: 0; /* largeur initiale */
     height: 4px;
     background-color: #fca311;
     border-radius: 2px;
-    animation: loading 1.2s ease-in-out forwards;
+    animation: loading 1.2s ease-in-out forwards; /* animation de chargement définie plus bas via @keyframes */
     margin: 1rem 0;
+    will-change: width; /* Optimise la performance en indiquant au navigateur que la largeur va être animée  */
 }
 
 @keyframes loading {
     from { width: 0; }
     to { width: 100%; }
+}
+
+/* --------------------------
+   Message d’erreur
+   --------------------------
+   Affiché en cas d’échec lors de l’appel API.
+   Doit être visible et explicite pour l’utilisateur.
+---------------------------- */
+.message-erreur {
+    color: #ff4d4d; /* rouge vif pour signaler un problème */
+    font-weight: 500;
+    font-size: 1.5rem; /* volontairement grand pour alerter l’utilisateur */
 }

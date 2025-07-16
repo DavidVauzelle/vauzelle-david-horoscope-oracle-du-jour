@@ -48,13 +48,16 @@ async function lancerTirage() {
     // Affiche une barre de chargement à chaque tirage
     chargement.hidden = false;
     chargement.removeAttribute('aria-hidden');
+    chargement.style.width = '0';
+    chargement.style.animation = 'none';
+    void chargement.offsetWidth;  // reflow
+    chargement.style.animation = 'loading 1.2s ease-in-out forwards';
     btnTirage.disabled = true; // Désactive le bouton pendant le chargement
-    chargement.innerHTML = "<div class='bar-chargement'></div>";
 
+    // On note le temps de départ du chargement
+    const debutChargement = Date.now();
+    
     try {
-        // On note le temps de départ du chargement
-        const debutChargement = Date.now();
-
         // Requête POST vers l'API avec clé
         const response = await fetch(baseUrl, fetchOptions);
 
@@ -107,6 +110,11 @@ async function lancerTirage() {
     // === Gestion des erreurs et chargement ===
 
     } catch (error) {
+        // Assure que la barre de chargement reste visible 1s minimum avant de montrer l'erreur
+        const tempsEcoule = Date.now() - debutChargement;
+        const delaiRestant = Math.max(0, 1000 - tempsEcoule);
+        await new Promise(resolve => setTimeout(resolve, delaiRestant));
+
         // En cas d'erreur (réseau, API, etc.), on affiche un message accessible à l'utilisateur
         erreurDiv.querySelector('p').textContent = erreurMessage;
         erreurDiv.hidden = false;
@@ -119,7 +127,8 @@ async function lancerTirage() {
         // Fin du traitement : on masque la barre de chargement visuellement et pour les technologies d'assistance
         btnTirage.disabled = false; // Réactive le bouton de tirage
         chargement.innerHTML = "";
-        chargement.setAttribute('aria-hidden', 'true');
+        chargement.style.animation = 'none';
         chargement.hidden = true;
+        chargement.setAttribute('aria-hidden', 'true');
     }
 }

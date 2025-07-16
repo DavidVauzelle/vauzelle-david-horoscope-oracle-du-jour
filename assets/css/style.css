@@ -1,0 +1,23 @@
+/* Règles globales de base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Palette de couleurs */
+:root {
+  /* Couleurs de fond */
+  --couleur-fond-principal: #1a1a2e;
+  --couleur-fond-secondaire: #16213e;
+
+  /* Couleurs de texte */
+  --couleur-texte-principal: #ffffff;
+  --couleur-texte-secondaire: #e0e0e0;
+  --couleur-texte-alt: #233554;
+
+  /* Couleur accent / appel à l’action */
+  --couleur-accent: #fca311;
+}

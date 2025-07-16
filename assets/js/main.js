@@ -24,7 +24,7 @@ const sectionTirage = document.querySelector('.section-tirage');
 const btnTirage = document.getElementById('btn-tirage');
 
 // Éléments de feedback visuel (chargement, erreur, résultats)
-const chargement = document.getElementById('chargement');
+const chargement = document.getElementById('barre-chargement');
 const erreurDiv = document.getElementById('erreur-message');
 const erreurMessage = "Une erreur est survenue. Veuillez réessayer.";
 const resultatApi = document.getElementById('resultat-api');
@@ -48,19 +48,28 @@ async function lancerTirage() {
     // Affiche une barre de chargement à chaque tirage
     chargement.hidden = false;
     chargement.removeAttribute('aria-hidden');
-    chargement.innerHTML = "<p>Chargement en cours…</p>"; // barre de chargement à styliser
     btnTirage.disabled = true; // Désactive le bouton pendant le chargement
-    // chargement.innerHTML = "<div class='bar-chargement'></div>"; // Pour afficher la barre de chargement une fois stylisée
+    chargement.innerHTML = "<div class='bar-chargement'></div>";
 
     try {
+        // On note le temps de départ du chargement
+        const debutChargement = Date.now();
+
         // Requête POST vers l'API avec clé
-       const response = await fetch(baseUrl, fetchOptions);
+        const response = await fetch(baseUrl, fetchOptions);
 
         // Erreur si réponse incorrecte
         if (!response.ok) throw new Error(erreurMessage);
 
         // Conversion de la réponse en JSON
         const data = await response.json();
+
+        // Calcul du temps écoulé
+        const tempsEcoule = Date.now() - debutChargement;
+        const delaiRestant = Math.max(0, 1000 - tempsEcoule); // minimum 1 seconde
+
+        // Attente éventuelle pour garantir au moins 1 seconde de loader
+        await new Promise(resolve => setTimeout(resolve, delaiRestant));
 
         // Extraction de l'objet 'horoscope' contenant les citations par signe depuis la réponse API
         const horoscopes = data.horoscope;

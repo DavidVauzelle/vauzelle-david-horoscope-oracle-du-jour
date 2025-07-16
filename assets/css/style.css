@@ -7,7 +7,9 @@
     box-sizing: border-box;
 }
 
-/* Palette de couleurs */
+/* --------------------------
+   Palette de couleurs
+---------------------------- */
 :root {
     /* Couleurs de fond */
     --couleur-fond-principal: #1a1a2e;
@@ -22,8 +24,10 @@
     --couleur-accent: #fca311;
 }
 
-/* Couleurs globales basiques pour fond et textes — harmonisation avec la palette */
-
+/* --------------------------
+   Couleurs globales basiques
+   — harmonisation avec la palette
+---------------------------- */
 body {
     background-color: var(--couleur-fond-secondaire); /* plus sombre pour contraster avec les blocs */
     color: var(--couleur-texte-principal);
@@ -44,3 +48,71 @@ p {
 }
 
 /* Fin des règles globales de couleurs */
+
+/* --------------------------
+   Layout global - Structure 
+---------------------------- */
+/* Propriétés communes pour les conteneurs principaux */
+
+/* Flex column commun à body et main-container */
+body,
+.main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    min-height: 100vh;
+    /* text-align: center; A déplacer car non pertinent ici (Pas layout pur) */
+}
+
+.main-container {
+    flex: 1; /* Pour occuper l’espace entre header et footer */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+/* Styles spécifiques et isolés */
+
+/* Section tirage avec centrage du bouton */
+.section-tirage > div {
+    display: flex;
+    justify-content: center;
+}
+
+/* Barre de chargement et message d’erreur alignés au centre */
+#chargement, #erreur-message {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Résultats (cartes des 12 signes) en mode colonne avec max-width */
+#resultat-api {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* === Fin layout === */
+
+/* Barre de chargement */
+#barre-chargement {
+    width: 0;
+    height: 4px;
+    background-color: #fca311;
+    border-radius: 2px;
+    animation: loading 1.2s ease-in-out forwards;
+    margin: 1rem 0;
+}
+
+@keyframes loading {
+    from { width: 0; }
+    to { width: 100%; }
+}

@@ -21,3 +21,19 @@
   /* Couleur accent / appel à l’action */
   --couleur-accent: #fca311;
 }
+
+/* Couleurs globales basiques pour fond et textes — harmonisation avec la palette */
+body {
+  background-color: var(--couleur-fond-principal);
+  color: var(--couleur-texte-principal);
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2 {
+  color: var(--couleur-texte-alt);
+}
+
+p {
+  color: var(--couleur-texte-secondaire);
+}
+/* Fin des règles globales de couleurs */

@@ -2,38 +2,45 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Palette de couleurs */
 :root {
-  /* Couleurs de fond */
-  --couleur-fond-principal: #1a1a2e;
-  --couleur-fond-secondaire: #16213e;
+    /* Couleurs de fond */
+    --couleur-fond-principal: #1a1a2e;
+    --couleur-fond-secondaire: #16213e;
 
-  /* Couleurs de texte */
-  --couleur-texte-principal: #ffffff;
-  --couleur-texte-secondaire: #e0e0e0;
-  --couleur-texte-alt: #233554;
+    /* Couleurs de texte */
+    --couleur-texte-principal: #ffffff;
+    --couleur-texte-secondaire: #e0e0e0;
+    --couleur-texte-alt: #233554;
 
-  /* Couleur accent / appel à l’action */
-  --couleur-accent: #fca311;
+    /* Couleur accent / appel à l’action */
+    --couleur-accent: #fca311;
 }
 
 /* Couleurs globales basiques pour fond et textes — harmonisation avec la palette */
+
 body {
-  background-color: var(--couleur-fond-principal);
-  color: var(--couleur-texte-principal);
-  font-family: 'Roboto', sans-serif;
+    background-color: var(--couleur-fond-secondaire); /* plus sombre pour contraster avec les blocs */
+    color: var(--couleur-texte-principal);
+}
+
+header,
+footer {
+    background-color: var(--couleur-fond-principal); /* légèrement plus clair */
+    color: var(--couleur-texte-principal);
 }
 
 h1, h2 {
-  color: var(--couleur-texte-alt);
+    color: var(--couleur-texte-principal); /* lisible sur fond sombre */
 }
 
 p {
-  color: var(--couleur-texte-secondaire);
+    color: var(--couleur-texte-secondaire);
 }
+
 /* Fin des règles globales de couleurs */

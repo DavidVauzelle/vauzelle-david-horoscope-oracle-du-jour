@@ -35,7 +35,7 @@ L’utilisateur clique sur un bouton pour déclencher une requête vers une API 
 
 ## 🌐 Lien vers le site en ligne
 
-👉 [Accéder au site](https://<ton-pseudo>.github.io/<nom-du-depot>/)
+👉 [Accéder au site](https://davidvauzelle.github.io/vauzelle-david-horoscope-oracle-du-jour/)
 
 ---
 

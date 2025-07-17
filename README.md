@@ -101,6 +101,15 @@ Cette organisation permet une séparation claire entre contenu, style et comport
 📸 Des captures d’écran illustrant la gestion et le suivi du projet (via Microsoft Teams) sont disponibles dans :
 `/assets/images/suivi-de-projet/`
 
+Elles permettent de visualiser les étapes clés du projet :  
+- Vue globale du tableau Kanban au démarrage (avec toutes les tâches)
+- Focus sur une tâche en cours (exemple sur la partie JavaScript)  
+- Visualisation d’une tâche terminée (avec sous-tâches cochées)  
+- Capture lors de la phase de livraison  
+- Capture de la version finale en production   
+
+Cela permet de visualiser le déroulé du projet étape par étape sans alourdir ce document.
+
 ---
 
 ## 🖼️ Maquette du projet

@@ -260,7 +260,12 @@ body {
    Media Queries - Responsive Design
    -------------------------- */
 
-/* Tablette */
+/* Tablette - écrans entre 768px et 1024px
+   - Augmente légèrement la taille de la police globale pour plus de lisibilité
+   - Ajuste les paddings du header, footer et main container pour mieux occuper l’espace
+   - Réduit la marge du bouton tirage pour un meilleur équilibre visuel
+   - Réduit l’espace entre les cartes horoscope
+*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
     body {
         font-size: 1.05rem;
@@ -283,3 +288,71 @@ body {
         gap: 1.5rem;
     }
 }
+
+/* Mobile - écrans jusqu’à 600px
+   - Padding réduit pour header et footer pour gagner de l’espace
+   - Titres et textes adaptés en taille pour petits écrans
+   - Conteneur principal occupe 100% de la largeur avec padding léger
+   - Résultats affichés en grille à 1 colonne pour meilleure lisibilité sur mobile
+   - Ajustements esthétiques : arrondis plus doux, paddings réduits
+   - Bouton tirage réduit pour s’adapter à la taille d’écran
+*/
+@media screen and (max-width: 600px) {
+    header, footer {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.75rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        line-height: 1.3;
+        margin: 1rem 0;
+    }
+
+    footer p {
+        font-size: 0.8rem;
+    }
+
+    .main-container {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    /* Résultats : grille 1 colonne pour les cartes horoscope */
+    #resultat-api {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.2rem;
+        padding: 0.8rem;
+    }
+
+    .bouton-tirage, .carte-horoscope, .carte-horoscope blockquote.horoscope {
+        border-radius: 8px;
+    }
+
+    .carte-horoscope {
+        padding: 0.8rem;
+    }
+
+    .carte-horoscope blockquote.horoscope {
+        padding: 0.6rem;
+    }
+
+    .section-tirage > div {
+        margin-top: 1rem;
+    }
+
+    .bouton-tirage {
+        font-size: 1rem;
+        margin: 1rem auto;
+        padding: 0.8rem;
+    }
+}
+
+/* === Media Queries - Responsive Design === */

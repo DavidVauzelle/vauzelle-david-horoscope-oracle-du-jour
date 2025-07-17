@@ -255,3 +255,31 @@ body {
     font-weight: 500;
     font-size: 1.5rem; /* volontairement grand pour alerter l’utilisateur */
 }
+
+/* --------------------------
+   Media Queries - Responsive Design
+   -------------------------- */
+
+/* Tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    body {
+        font-size: 1.05rem;
+    }
+
+    header, footer {
+        padding: 1.2rem;
+    }
+
+    .main-container {
+        max-width: 900px;
+        padding: 1.2rem;
+    }
+
+    .bouton-tirage {
+        margin: 1.2rem;
+    }
+
+    #resultat-api {
+        gap: 1.5rem;
+    }
+}
